@@ -1,0 +1,47 @@
+_format_version: "3.0"
+_transform: true
+
+services:
+  - name: b_and_h_service2
+    url: https://endpoint1.free.beeceptor.com
+    retries: 10
+    plugins:
+      - name: kongbodyinspection
+      - name: request-size-limiting
+        config:
+          allowed_payload_size: 13
+          require_content_length: false
+          size_unit: kilobytes
+    routes:
+      - name: b_and_h_route2
+        paths:
+          - /lxp2
+
+
+  - name: b_and_h_service
+    host: lxp-upstream1
+    routes:
+      - name: b_and_h_route
+        paths:
+          - /lxp1
+
+
+upstreams:
+  - name: lxp-upstream1
+    algorithm: round-robin
+    targets:
+      - target: endpoint2.free.beeceptor.com:80
+      - target: endpoint3.free.beeceptor.com:80
+
+#
+#services:
+#  - name: b_and_h_service
+#    host: insta.dbs.com/${MSG}
+#
+#    port: 80
+#    protocol: http
+#    routes:
+#      - name: b_and_h_route
+#        paths:
+#          - /msg.insta.dbs.com
+

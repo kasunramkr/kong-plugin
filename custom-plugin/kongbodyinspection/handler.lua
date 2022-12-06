@@ -12,7 +12,7 @@ function kongbodyinspection:access(conf)
     kong.log.debug("INSIDE kongbodyinspection")
     local scheme = kong.request.get_scheme()
     kong.log.debug(scheme)
-    ngx.redirect("https://endpoint3.free.beeceptor.com")
+    --ngx.redirect("https://endpoint3.free.beeceptor.com")
     if is_json_body(kong.request.get_header("Content-Type")) then
 
         local body, err, mimetype = kong.request.get_body()

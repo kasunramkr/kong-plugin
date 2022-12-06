@@ -3,7 +3,7 @@ _transform: true
 
 services:
   - name: b_and_h_service2
-    url: https://endpoint1.free.beeceptor.com
+    url: http://endpoint1.free.beeceptor.com:80
     retries: 10
     plugins:
       - name: kongbodyinspection
@@ -20,6 +20,8 @@ services:
 
   - name: b_and_h_service
     host: lxp-upstream1
+    protocol: https
+    retries: 10
     routes:
       - name: b_and_h_route
         paths:
@@ -28,12 +30,16 @@ services:
 
 upstreams:
   - name: lxp-upstream1
+    hash_on: none
     algorithm: round-robin
     targets:
-      - target: endpoint2.free.beeceptor.com:80
-      - target: endpoint3.free.beeceptor.com:80
+      - target: endpoint2.free.beeceptor.com:443
+      - target: endpoint3.free1.beeceptor.com:443
 
-#
+# reverese http forword https
+#trigger email in sql injection or a error
+#if one upstream target down
+
 #services:
 #  - name: b_and_h_service
 #    host: insta.dbs.com/${MSG}

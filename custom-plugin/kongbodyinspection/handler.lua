@@ -18,15 +18,35 @@ function kongbodyinspection:access(conf)
         local body, err, mimetype = kong.request.get_body()
         if body ~= nil and body.message ~= nil and body.message[1] ~= nil and body.message[1].text ~= nil then
             local wa_message = body.message[1].text.body
-
             kong.log.debug(wa_message)
-            local deletePattern = "'%s*;%s*[dD][eE][lL][eE][tT][eE]"
-            local insertPattern = "'%s*;%s*[iI][nN][sS][eE][rR][tT]"
-            if string.match (wa_message,
-                    deletePattern) then
-                kong.response.exit(550, '{"code": "SQL_INJECTION_DELETE" ,"error": "SQL delete detected"}', {["Content-Type"] = "application/json"})
-            elseif string.match (wa_message, insertPattern) then
-                kong.response.exit(551, '{"code": "SQL_INJECTION_INSERT" ,"error": "SQL insert detected"}', {["Content-Type"] = "application/json"})
+
+            local imgAttackPattern = "<[iI][mM][gG].?>"
+            local orAttackPattern = "'%s*[oO][rR]"
+            local sqlDeleteAttackPattern = "'%s*;%s*[dD][eE][lL][eE][tT][eE]"
+            local sqlDropTableAttackPattern = "'%s*;%s*[dD][rR][oO][pP]%s*[tT][aA][bB][lL][eE]"
+            local sqlInsertAttackPattern = "'%s*;%s*[iI][nN][sS][eE][rR][tT]"
+            local sqlServerShutdownAttackPattern = "'%s*;%s*[sS][hH][uU][tT][dD][oO][wW][nN]%s*[wW][iI][tT][hH]%s*[nN][oO][wW][aA][iI][tT]"
+            local sqlUpdateAttackPattern = "'%s*;%s*[uU][pP][dD][aA][tT][eE]"
+            local svgAttackPattern = "<[sS][vV][gG].?>"
+            local scriptAttackPattern = "<[sS][cC][rR][iI][pP][tT].?>"
+            if string.match (wa_message, imgAttackPattern) then
+                kong.response.exit(550, '{"code": "IMG_ATTACK" ,"error": "Img attack detected"}', {["Content-Type"] = "application/json"})
+            elseif string.match (wa_message, orAttackPattern) then
+                kong.response.exit(551, '{"code": "OR_ATTACK" ,"error": "Or attack detected"}', {["Content-Type"] = "application/json"})
+            elseif string.match (wa_message, sqlDeleteAttackPattern) then
+                kong.response.exit(551, '{"code": "SQL_DELETE_ATTACK" ,"error": "SQL delete attack detected"}', {["Content-Type"] = "application/json"})
+            elseif string.match (wa_message, sqlDropTableAttackPattern) then
+                kong.response.exit(551, '{"code": "SQL_DROP_TABLE_ATTACK" ,"error": "SQL drop table attack detected"}', {["Content-Type"] = "application/json"})
+            elseif string.match (wa_message, sqlInsertAttackPattern) then
+                kong.response.exit(551, '{"code": "SQL_INSERT_ATTACK" ,"error": "SQL insert attack detected"}', {["Content-Type"] = "application/json"})
+            elseif string.match (wa_message, sqlServerShutdownAttackPattern) then
+                kong.response.exit(551, '{"code": "SQL_SERVER_SHUTDOWN_ATTACK" ,"error": "SQL server shutdown attack detected"}', {["Content-Type"] = "application/json"})
+            elseif string.match (wa_message, sqlUpdateAttackPattern) then
+                kong.response.exit(551, '{"code": "SQL_UPDATE_ATTACK" ,"error": "SQL update attack detected"}', {["Content-Type"] = "application/json"})
+            elseif string.match (wa_message, svgAttackPattern) then
+                kong.response.exit(551, '{"code": "SVG_ATTACK" ,"error": "Svg attack detected"}', {["Content-Type"] = "application/json"})
+            elseif string.match (wa_message, scriptAttackPattern) then
+                kong.response.exit(551, '{"code": "SCRIPT_ATTACK" ,"error": "Script attack detected"}', {["Content-Type"] = "application/json"})
             end
         end
     end

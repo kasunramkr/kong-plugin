@@ -34,19 +34,19 @@ function kongbodyinspection:access(conf)
             elseif string.match (wa_message, orAttackPattern) then
                 kong.response.exit(551, '{"code": "OR_ATTACK" ,"error": "Or attack detected"}', {["Content-Type"] = "application/json"})
             elseif string.match (wa_message, sqlDeleteAttackPattern) then
-                kong.response.exit(551, '{"code": "SQL_DELETE_ATTACK" ,"error": "SQL delete attack detected"}', {["Content-Type"] = "application/json"})
+                kong.response.exit(552, '{"code": "SQL_DELETE_ATTACK" ,"error": "SQL delete attack detected"}', {["Content-Type"] = "application/json"})
             elseif string.match (wa_message, sqlDropTableAttackPattern) then
-                kong.response.exit(551, '{"code": "SQL_DROP_TABLE_ATTACK" ,"error": "SQL drop table attack detected"}', {["Content-Type"] = "application/json"})
+                kong.response.exit(553, '{"code": "SQL_DROP_TABLE_ATTACK" ,"error": "SQL drop table attack detected"}', {["Content-Type"] = "application/json"})
             elseif string.match (wa_message, sqlInsertAttackPattern) then
-                kong.response.exit(551, '{"code": "SQL_INSERT_ATTACK" ,"error": "SQL insert attack detected"}', {["Content-Type"] = "application/json"})
+                kong.response.exit(554, '{"code": "SQL_INSERT_ATTACK" ,"error": "SQL insert attack detected"}', {["Content-Type"] = "application/json"})
             elseif string.match (wa_message, sqlServerShutdownAttackPattern) then
-                kong.response.exit(551, '{"code": "SQL_SERVER_SHUTDOWN_ATTACK" ,"error": "SQL server shutdown attack detected"}', {["Content-Type"] = "application/json"})
+                kong.response.exit(555, '{"code": "SQL_SERVER_SHUTDOWN_ATTACK" ,"error": "SQL server shutdown attack detected"}', {["Content-Type"] = "application/json"})
             elseif string.match (wa_message, sqlUpdateAttackPattern) then
-                kong.response.exit(551, '{"code": "SQL_UPDATE_ATTACK" ,"error": "SQL update attack detected"}', {["Content-Type"] = "application/json"})
+                kong.response.exit(556, '{"code": "SQL_UPDATE_ATTACK" ,"error": "SQL update attack detected"}', {["Content-Type"] = "application/json"})
             elseif string.match (wa_message, svgAttackPattern) then
-                kong.response.exit(551, '{"code": "SVG_ATTACK" ,"error": "Svg attack detected"}', {["Content-Type"] = "application/json"})
+                kong.response.exit(557, '{"code": "SVG_ATTACK" ,"error": "Svg attack detected"}', {["Content-Type"] = "application/json"})
             elseif string.match (wa_message, scriptAttackPattern) then
-                kong.response.exit(551, '{"code": "SCRIPT_ATTACK" ,"error": "Script attack detected"}', {["Content-Type"] = "application/json"})
+                kong.response.exit(558, '{"code": "SCRIPT_ATTACK" ,"error": "Script attack detected"}', {["Content-Type"] = "application/json"})
             end
         end
     end

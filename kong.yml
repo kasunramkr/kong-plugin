@@ -36,18 +36,4 @@ upstreams:
       - target: endpoint2.free.beeceptor.com:443
       - target: endpoint3.free1.beeceptor.com:443
 
-# reverese http forword https
-#trigger email in sql injection or a error
-#if one upstream target down
-
-#services:
-#  - name: b_and_h_service
-#    host: insta.dbs.com/${MSG}
-#
-#    port: 80
-#    protocol: http
-#    routes:
-#      - name: b_and_h_route
-#        paths:
-#          - /msg.insta.dbs.com
 

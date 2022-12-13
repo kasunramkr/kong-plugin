@@ -3,10 +3,11 @@ _transform: true
 
 services:
   - name: b_and_h_service2
-    url: http://endpoint1.free.beeceptor.com:80
+#    url: http://endpoint1.free.beeceptor.com:80
+    url: http://kong-plugin-kong_appdb:8010/health
     retries: 10
     plugins:
-      - name: kongbodyinspection
+#      - name: kongbodyinspection
       - name: request-size-limiting
         config:
           allowed_payload_size: 13
@@ -20,7 +21,8 @@ services:
 
   - name: b_and_h_service
     host: lxp-upstream1
-    protocol: https
+    path: /health
+#    protocol: https
     retries: 10
     routes:
       - name: b_and_h_route
@@ -32,8 +34,21 @@ upstreams:
   - name: lxp-upstream1
     hash_on: none
     algorithm: round-robin
+    healthchecks:
+      active:
+        http_path: /health
+#        type: https
+        healthy:
+          interval: 2
+          successes: 1
+        unhealthy:
+          interval: 2
+          tcp_failures: 1
+          timeouts: 1
+          http_failures: 1
     targets:
-      - target: endpoint2.free.beeceptor.com:443
-      - target: endpoint3.free1.beeceptor.com:443
+#      - target: endpoint1.free.beeceptor.com:443
+#      - target: endpoint1.free.beeceptor.com:443
+      - target: kong-plugin-kong_appdb:8010
 
 

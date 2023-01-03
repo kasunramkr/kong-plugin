@@ -6,7 +6,7 @@ GET http://localhost:8001/services/b_and_h_service
 Accept: application/json
 ###
 
-POST http://localhost:8000/lxp1
+POST http://localhost:8000/lxp2
 Content-Type: application/json
 
 {
@@ -29,5 +29,17 @@ Content-Type: application/json
       "type": "text"
     }
   ]
+}
+
+###
+POST http://localhost:8000/lxp2
+Content-Type: application/json
+
+{
+  "org.matrix.msc1767.text": "text",
+  "body": "hi dbs '; insert",
+  "msgtype": "m.text",
+  "channel": "wechatminiapp",
+  "is_integration_template": false
 }
 

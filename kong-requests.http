@@ -36,10 +36,23 @@ POST http://localhost:8000/lxp2
 Content-Type: application/json
 
 {
-  "org.matrix.msc1767.text": "text",
-  "body": "hi dbs '; insert",
-  "msgtype": "m.text",
-  "channel": "wechatminiapp",
-  "is_integration_template": false
+  "rooms": {
+    "join": {
+      "!aUCkkdsds:leapxpert-staging": {
+        "timeline": {
+          "events": [
+            {
+              "type": "m.room.message",
+              "content": {
+                "msgtype": "m.text",
+                "body": "hi dbs from we chat ' ; delete",
+                "channel": "wechatminiapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
 }
 

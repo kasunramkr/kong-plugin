@@ -1,18 +1,16 @@
 local body_transformer = require "kong.plugins.response-transformer.body_transformer"
-local ngx = require "ngx"
 
 local is_json_body = body_transformer.is_json_body
 
 local kongbodyinspection = {
   PRIORITY = 1005,
-  VERSION = "2.2.0"
+  VERSION = "1.0.0"
 }
 
 function kongbodyinspection:access(conf)
-    kong.log.debug("INSIDE kongbodyinspection")
+    kong.log.debug("#############INSIDE kongbodyinspection###############")
     local scheme = kong.request.get_scheme()
     kong.log.debug(scheme)
-    --ngx.redirect("https://endpoint3.free.beeceptor.com")
     if is_json_body(kong.request.get_header("Content-Type")) then
 
         local body, err, mimetype = kong.request.get_body()
@@ -24,8 +22,17 @@ function kongbodyinspection:access(conf)
                 kong.log.debug(message)
             end
 
-            if body.msgtype == "m.text" then
-                message = body.body
+            if body.rooms ~= nil and body.rooms.join ~=nil then
+                local extractData
+                for k,v in pairs(body.rooms.join) do
+                    extractData = v
+                    break
+                end
+
+                if extractData ~= nil and extractData.timeline ~= nil and extractData.timeline.events ~= nil and extractData.timeline.events[1] ~= nil
+                        and extractData.timeline.events[1].content ~= nil and extractData.timeline.events[1].content.body then
+                    message = extractData.timeline.events[1].content.body
+                end
                 kong.log.debug(message)
             end
         end

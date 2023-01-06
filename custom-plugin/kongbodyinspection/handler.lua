@@ -30,7 +30,7 @@ function kongbodyinspection:access(conf)
                 end
 
                 if extractData ~= nil and extractData.timeline ~= nil and extractData.timeline.events ~= nil and extractData.timeline.events[1] ~= nil
-                        and extractData.timeline.events[1].content ~= nil and extractData.timeline.events[1].content.body then
+                        and extractData.timeline.events[1].content ~= nil and extractData.timeline.events[1].content.msgtype == "m.text" and extractData.timeline.events[1].content.body then
                     message = extractData.timeline.events[1].content.body
                 end
                 kong.log.debug(message)
